@@ -1,6 +1,6 @@
 # action.yml
-name: 'Prefapp-cicdpy yaml edit'
-description: 'Use Prefapp-cicdpy image to edit yaml'
+name: 'Prefapp helm state updater'
+description: 'Github action that updates helm state repo using prefapp/prefapp-cicdpy docker image'
 inputs:
   file-path:
     description: 'Path to target yaml file'
