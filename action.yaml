@@ -12,7 +12,7 @@ inputs:
   value:
     description: 'Final value for key field'
     required: true
-  git-dir:
+  git-state-repo:
     description: 'Path to git repo'
     required: true
   git-user:
@@ -36,7 +36,7 @@ runs:
 
     - run: |
         ls -l 
-        cd ${{ inputs.git-dir }}
+        cd ${{ inputs.git-state-repo }}
         ls -lah
         echo "GIT CONFIG"
         echo 'git config user.name ${{ inputs.git-user }}'
