@@ -21,6 +21,14 @@ inputs:
   git-mail:
     description: 'Git mail'
     required: true
+  git-remote:
+    description: 'Git remote'
+    required: false
+    default: 'origin'
+  git-branch:
+    description: 'Git branch'
+    required: false
+    default: 'master'
   commit-message:
     description: 'Git commit message'
     required: true
@@ -45,12 +53,12 @@ runs:
         echo "GIT STATUS"
         git status .
         echo "GIT ADD"
-        git add cbx/test/image.values.yaml
+        git add ${{ inputs.file-path }}
         git status
         echo "GIT COMMIT"
         echo git commit -m ${{ inputs.commit-message }}
         git commit -m "${{ inputs.commit-message }}"
         echo "GIT PUSH"
-        git push origin master
+        git push ${{ inputs.git-remote }} ${{ inputs.git-branch }}
 
       shell: bash
