@@ -1,6 +1,6 @@
 # action.yml
-name: 'Prefapp-cicdpy yaml edit'
-description: 'Use Prefapp-cicdpy image to edit yaml'
+name: 'Prefapp helm state updater'
+description: 'Github action that updates helm state repo using prefapp/prefapp-cicdpy docker image'
 inputs:
   file-path:
     description: 'Path to target yaml file'
@@ -12,7 +12,7 @@ inputs:
   value:
     description: 'Final value for key field'
     required: true
-  git-dir:
+  git-state-repo:
     description: 'Path to git repo'
     required: true
   git-user:
@@ -21,6 +21,14 @@ inputs:
   git-mail:
     description: 'Git mail'
     required: true
+  git-remote:
+    description: 'Git remote'
+    required: false
+    default: 'origin'
+  git-branch:
+    description: 'Git branch'
+    required: false
+    default: 'master'
   commit-message:
     description: 'Git commit message'
     required: true
@@ -36,7 +44,7 @@ runs:
 
     - run: |
         ls -l 
-        cd ${{ inputs.git-dir }}
+        cd ${{ inputs.git-state-repo }}
         ls -lah
         echo "GIT CONFIG"
         echo 'git config user.name ${{ inputs.git-user }}'
@@ -45,12 +53,12 @@ runs:
         echo "GIT STATUS"
         git status .
         echo "GIT ADD"
-        git add cbx/test/image.values.yaml
+        git add ${{ inputs.file-path }}
         git status
         echo "GIT COMMIT"
         echo git commit -m ${{ inputs.commit-message }}
         git commit -m "${{ inputs.commit-message }}"
         echo "GIT PUSH"
-        git push origin master
+        git push ${{ inputs.git-remote }} ${{ inputs.git-branch }}
 
       shell: bash
